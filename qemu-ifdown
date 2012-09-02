@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "0" > /proc/sys/net/ipv4/ip_forward
+
+EXTIF=eth1
+INNET="192.168.16.0/24"
+
+ifconfig $1 0.0.0.0 down
+iptables -t nat -D POSTROUTING -o eth1 -s 192.168.16.0/24 -j MASQUERADE

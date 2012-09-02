@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "1" > /proc/sys/net/ipv4/ip_forward
+echo "running QEMU-Ifup"
+
+EXTIF=eth1
+INNET="192.168.16.0/24"
+
+ifconfig $1 192.168.16.1 up
+iptables -t nat -A POSTROUTING -o eth1 -s 192.168.16.0/24 -j MASQUERADE
